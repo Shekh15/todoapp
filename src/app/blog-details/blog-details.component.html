@@ -1,0 +1,14 @@
+<div class="container my-4">
+
+      <div class="card my-4 mx-auto" style="width:50rem;">
+        <div class="card-header text-center">
+          <h4>{{singleBlogData.Title}}</h4>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Author Name : <span [ngStyle]="{'font-weight': '400'}">{{singleBlogData.AuthorName}}</span><span class="float-right">Category : <span [ngStyle]="{'font-weight': '400'}">{{singleBlogData.Category}}</span></span></h5>
+          <p class="card-text">{{singleBlogData.Content}}</p>
+          <button class="btn btn-secondary" (click)="backToHome()">Back</button>
+        </div>
+    </div>
+
+</div>

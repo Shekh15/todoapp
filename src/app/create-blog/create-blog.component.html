@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="card my-3 shadow mx-auto" style="width: 40rem;">
+        <div class="card-body">
+            <form [formGroup]="blogForm" (ngSubmit)="isEdit ? updateBlog() : addBlogToDatabase()">
+
+                <div class="form-group">
+                  <label for="title">Title</label>
+                  <input type="text" class="form-control" formControlName="title" id="title" placeholder="Enter title">
+                  <span *ngIf="submitted && Title?.invalid && Title?.touched" class="text-danger">This field is not valid</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="blog">Blog</label>
+                  <textarea class="form-control" formControlName="content" id="blog" rows="8"></textarea>
+                  <span *ngIf="Content && Content.invalid && Content.touched" class="text-danger">This field is not valid</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="author">Author Name</label>
+                    <input type="text" class="form-control" formControlName="author" id="author" placeholder="Enter name">
+                    <span *ngIf="Author && Author.invalid && Author.touched" class="text-danger">This field is not valid</span>
+                </div>
+
+                <div class="form-group" *ngIf="!isEdit">
+                    <label for="date">Publish Date</label>
+                    <input type="text" id="date" formControlName="publishDate" readonly placeholder="Choose" class="form-control" bsDatepicker>
+                    <span *ngIf="publishDate && publishDate.invalid && publishDate.touched" class="text-danger">This field is not valid</span>
+                </div>
+
+                <div class="form-group" *ngIf="isEdit">
+                    <label for="date">Publish Date</label>
+                    <input type="text" id="date" formControlName="publishDate" readonly placeholder="Choose" class="form-control">
+                    <span *ngIf="publishDate && publishDate.invalid && publishDate.touched" class="text-danger">This field is not valid</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select class="form-control" id="category" formControlName="category" style="width:200px;">
+                        <option value="none">None</option>
+                        <option value="food">Food</option>
+                        <option value="technology">Technology</option>
+                        <option value="Lifestyle">Lifestyle</option>
+                    </select>
+                    <span *ngIf="Category && Category.invalid && Category.touched" class="text-danger">This field is not valid</span>
+                </div>
+
+                <button type="button" class="btn btn-secondary mr-2" (click)="backToHome()">{{isEdit ? "Cancel" : "Back"}}</button>
+                <button type="button" class="btn btn-info" *ngIf="!isEdit" (click)="resetForm()">Reset</button>
+                <button type="submit" [disabled]=blogForm.invalid class="btn btn-primary ml-2">{{isEdit ? "Update" : "Publish"}}</button>
+
+            </form>
+        </div>
+        <span>{{blogForm.value | json}}</span>
+    </div>
+</div>
