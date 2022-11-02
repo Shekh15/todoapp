@@ -1,1 +1,1 @@
-This is todo app using localstorage
+This is todo app using localstorage.
