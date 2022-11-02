@@ -12,10 +12,10 @@ import { DatePipe } from '@angular/common';
 })
 export class CreateBlogComponent implements OnInit {
 
-  blogId:any = null;
+  blogId: any = null;
   blogForm: FormGroup = new FormGroup({});
-  singleBlogData:any = null;
-  isEdit:any = false;
+  singleBlogData: any = null;
+  isEdit: any = false;
   submitted = false;
 
   constructor(private activatedRoute: ActivatedRoute, private datepipe: DatePipe, private formBuilder: FormBuilder, private router: Router, private blogService: BlogService) { }
@@ -25,18 +25,18 @@ export class CreateBlogComponent implements OnInit {
     this.blogId = parseInt(this.activatedRoute.snapshot.params['blogId']) || 0;
     console.log(this.blogId);
 
-    if(this.blogId){
+    if (this.blogId) {
       this.blogDetails();
       this.isEdit = true;
     }
 
     this.blogForm = this.formBuilder.group({
- 
-      title: this.singleBlogData ? [this.singleBlogData.Title,Validators.required] : [null,Validators.required],
-      content: this.singleBlogData ? [this.singleBlogData.Content,Validators.required] : [null,Validators.required],
-      author: this.singleBlogData ? [this.singleBlogData.AuthorName,Validators.required] : [null, Validators.required],
-      publishDate: this.singleBlogData ? [this.datepipe.transform(this.singleBlogData.PublishDate, 'yyyy-MM-dd'),Validators.required] : [null,Validators.required],
-      category: this.singleBlogData ? [this.singleBlogData.Category,Validators.required] : ['none', Validators.required]
+
+      title: this.singleBlogData ? [this.singleBlogData.Title, Validators.required] : [null, Validators.required],
+      content: this.singleBlogData ? [this.singleBlogData.Content, Validators.required] : [null, Validators.required],
+      author: this.singleBlogData ? [this.singleBlogData.AuthorName, Validators.required] : [null, Validators.required],
+      publishDate: this.singleBlogData ? [this.datepipe.transform(this.singleBlogData.PublishDate, 'yyyy-MM-dd'), Validators.required] : [null, Validators.required],
+      category: this.singleBlogData ? [this.singleBlogData.Category, Validators.required] : ['none', Validators.required]
     });
 
     console.log(this.blogForm.value);
@@ -44,15 +44,15 @@ export class CreateBlogComponent implements OnInit {
   }
 
 
-  blogDetails(){
+  blogDetails() {
     this.singleBlogData = this.blogService.selectBlogById(this.blogId);
   }
 
-  updateBlog(){
+  updateBlog() {
 
-     let payloadBlogUpdate = {
+    let payloadBlogUpdate = {
       BlogId: this.singleBlogData.BlogId,
-      Title: this.blogForm.value.title == null || this.blogForm.value.title == "" ?  null : this.blogForm.value.title,
+      Title: this.blogForm.value.title == null || this.blogForm.value.title == "" ? null : this.blogForm.value.title,
       Content: this.blogForm.value.content == null || this.blogForm.value.content == "" ? null : this.blogForm.value.content,
       AuthorName: this.blogForm.value.author == null || this.blogForm.value.author == "" ? null : this.blogForm.value.author,
       PublishDate: this.blogForm.value.publishDate == null || this.blogForm.value.publishDate == "" ? null : this.blogForm.value.publishDate,
@@ -66,29 +66,29 @@ export class CreateBlogComponent implements OnInit {
   }
 
 
-  backToHome(){
+  backToHome() {
     this.router.navigate(['home']);
-    
+
   }
 
-  resetForm(){
+  resetForm() {
     this.blogForm.reset();
   }
 
-  cancel(){
+  cancel() {
     this.router.navigateByUrl('home');
   }
 
 
-  addBlogToDatabase(){
+  addBlogToDatabase() {
 
     this.submitted = true;
 
-    this.blogForm.addControl('blogId',this.formBuilder.control(''));
+    this.blogForm.addControl('blogId', this.formBuilder.control(''));
 
     let payloadBlog = {
       BlogId: this.blogForm.value.blogId,
-      Title: this.blogForm.value.title == null || this.blogForm.value.title == "" ?  null : this.blogForm.value.title,
+      Title: this.blogForm.value.title == null || this.blogForm.value.title == "" ? null : this.blogForm.value.title,
       Content: this.blogForm.value.content == null || this.blogForm.value.content == "" ? null : this.blogForm.value.content,
       AuthorName: this.blogForm.value.author == null || this.blogForm.value.author == "" ? null : this.blogForm.value.author,
       PublishDate: this.blogForm.value.publishDate == null || this.blogForm.value.publishDate == "" ? null : this.blogForm.value.publishDate,
@@ -98,31 +98,31 @@ export class CreateBlogComponent implements OnInit {
     this.blogService.saveBlogData(payloadBlog);
 
     this.router.navigate(['home']);
-  }   
+  }
 
 
 
-  get Title(){
+  get Title() {
 
     return this.blogForm.get('title');
   }
 
-  get Content(){
+  get Content() {
 
     return this.blogForm.get('content');
   }
 
-  get Author(){
+  get Author() {
 
     return this.blogForm.get('author');
   }
 
-  get publishDate(){
+  get publishDate() {
 
     return this.blogForm.get('publishDate');
   }
 
-  get Category(){
+  get Category() {
 
     return this.blogForm.get('Category');
   }
